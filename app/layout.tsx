@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MINDLET · Instant Board",
+  title: "sso's padlet · Instant Board",
   description: "생각을 가볍게 붙여 두는 개인용 메모 보드",
 };
 

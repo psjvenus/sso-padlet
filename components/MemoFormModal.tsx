@@ -77,7 +77,7 @@ export default function MemoFormModal({
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold tracking-[0.18em] text-sky-600">
-              NEW MINDLET
+              NEW sso&apos;s padlet
             </p>
             <h2 id="memo-form-title" className="mt-1 text-xl font-semibold">
               생각 붙이기

@@ -46,10 +46,17 @@ export default function AdminPanel({
 
   async function logout() {
     setLoading(true);
-    await fetch("/api/admin/logout", { method: "POST" });
-    setLoading(false);
-    onAuthChanged(false, "관리자 모드를 종료했습니다.");
-    onClose();
+    setError("");
+    try {
+      const response = await fetch("/api/admin/logout", { method: "POST" });
+      if (!response.ok) throw new Error("로그아웃하지 못했습니다.");
+      onAuthChanged(false, "관리자 모드를 종료했습니다.");
+      onClose();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "로그아웃하지 못했습니다.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function deleteAll() {
@@ -71,7 +78,7 @@ export default function AdminPanel({
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold tracking-[0.18em] text-sky-600">
-              MINDLET ADMIN
+              sso&apos;s padlet ADMIN
             </p>
             <h2 className="mt-1 text-xl font-semibold">관리자 패널</h2>
           </div>
@@ -123,6 +130,9 @@ export default function AdminPanel({
           </form>
         ) : (
           <div className="mt-8 space-y-4">
+            {error && !confirmAll && (
+              <p role="alert" className="text-sm text-rose-700">{error}</p>
+            )}
             <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4">
               <div className="flex items-center gap-2 font-semibold text-sky-800">
                 <ShieldCheck className="h-5 w-5" />

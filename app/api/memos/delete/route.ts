@@ -6,7 +6,10 @@ export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const body = await request.json().catch(() => null);
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return NextResponse.json({ error: "잘못된 요청입니다." }, { status: 400 });
+    }
     if (typeof body.id !== "string" || !isFourDigitPassword(body.password)) {
       return NextResponse.json(
         { error: "메모와 숫자 4자리 비밀번호를 확인해 주세요." },
